@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revenue Goal Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      width: 400px;
+      max-width: 95%;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 15px;
+      display: block;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f0f8ff;
+      border-left: 5px solid #0077cc;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Revenue Goal Calculator</h2>
+    <label>Product/Service:</label>
+    <input type="text" id="product" placeholder="e.g. Coaching Package">
+
+    <label>Price per Unit ($):</label>
+    <input type="number" id="price" placeholder="e.g. 100">
+
+    <label>Revenue Goal ($):</label>
+    <input type="number" id="goal" placeholder="e.g. 100000">
+
+    <div class="result" id="output">
+      Enter your details above 👆
+    </div>
+  </div>
+
+  <script>
+    const priceInput = document.getElementById("price");
+    const goalInput = document.getElementById("goal");
+    const productInput = document.getElementById("product");
+    const output = document.getElementById("output");
+
+    function calculate() {
+      const product = productInput.value || "Your Product";
+      const price = parseFloat(priceInput.value);
+      const goal = parseFloat(goalInput.value);
+
+      if (price > 0 && goal > 0) {
+        const units = Math.ceil(goal / price);
+        output.innerHTML = `
+          To make <b>$${goal.toLocaleString()}</b> with <b>${product}</b>:<br><br>
+          • Sell <b>${units}</b> units at $${price} each.<br><br>
+          Or think in reverse:<br>
+          • 100 customers × $${(goal/100).toFixed(2)} = $${goal.toLocaleString()}<br>
+          • 1,000 customers × $${(goal/1000).toFixed(2)} = $${goal.toLocaleString()}
+        `;
+      } else {
+        output.innerHTML = "Enter price and revenue goal to see results.";
+      }
+    }
+
+    priceInput.addEventListener("input", calculate);
+    goalInput.addEventListener("input", calculate);
+    productInput.addEventListener("input", calculate);
+  </script>
+</body>
+</html>
